@@ -336,7 +336,7 @@ def hgTransformerGetPipeline(text_strings,
     if task in ['question-answering', 'zero-shot-classification']:
         task_scores = task_pipeline(**kwargs)
     else:
-        print(f"[*] Run NER pipeline for: {" ".join(text_strings)}")
+        print(f'[*] Run NER pipeline for: {" ".join(text_strings)}')
         task_scores = task_pipeline(text_strings, **kwargs)
         print(f"[+] Task scores: {task_scores}")
 
