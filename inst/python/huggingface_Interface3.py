@@ -318,10 +318,13 @@ def hgTransformerGetPipeline(text_strings,
         text_strings = [text_strings]
     if model:
         config, tokenizer, transformer_model = get_model(model,hg_gated=hg_gated, hg_token=hg_token)
-        if device_num >= 0:
-            task_pipeline = pipeline(task, model=model, tokenizer=tokenizer, device=device_num)
+        if task in ['ner']:
+            task_pipeline = pipeline(task, model=model, tokenizer=tokenizer, aggregation_strategy='max')
         else:
-            task_pipeline = pipeline(task, model=model, tokenizer=tokenizer)
+            if device_num >= 0:
+                task_pipeline = pipeline(task, model=model, tokenizer=tokenizer, device=device_num)
+            else:
+                task_pipeline = pipeline(task, model=model, tokenizer=tokenizer)
     else:
         if device_num >= 0:
             task_pipeline = pipeline(task, device=device_num)
@@ -429,8 +432,7 @@ def hgTransformerGetNER(text_strings,
                             tokenizer_parallelism = tokenizer_parallelism,
                             logging_level = logging_level,
                             return_incorrect_results = return_incorrect_results,
-                            set_seed = set_seed,
-                            aggregation_strategy='max')
+                            set_seed = set_seed)
     return ner_scores
 
 def hgTransformerGetZeroShot(sequences,
