@@ -319,7 +319,7 @@ def hgTransformerGetPipeline(text_strings,
     if model:
         config, tokenizer, transformer_model = get_model(model,hg_gated=hg_gated, hg_token=hg_token)
         if task in ['ner']:
-            print("[*] Create NER pipeline...")
+            #print("[*] Create NER pipeline...")
             task_pipeline = pipeline(task, model=model, tokenizer=tokenizer, aggregation_strategy='max')
         else:
             if device_num >= 0:
@@ -336,9 +336,9 @@ def hgTransformerGetPipeline(text_strings,
     if task in ['question-answering', 'zero-shot-classification']:
         task_scores = task_pipeline(**kwargs)
     else:
-        print(f'[*] Run NER pipeline for: {" ".join(text_strings)}')
+        #print(f'[*] Run NER pipeline for: {" ".join(text_strings)}')
         task_scores = task_pipeline(text_strings, **kwargs)
-        print(f"[+] Task scores: {task_scores}")
+        #print(f"[+] Task scores: {task_scores}")
 
     if len(task_scores) == 0 or (isinstance(task_scores, list) and len(task_scores[0]) == 0):
         return task_scores
