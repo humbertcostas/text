@@ -421,7 +421,8 @@ def hgTransformerGetNER(text_strings,
                             tokenizer_parallelism = tokenizer_parallelism,
                             logging_level = logging_level,
                             return_incorrect_results = return_incorrect_results,
-                            set_seed = set_seed)
+                            set_seed = set_seed,
+                            aggregation_strategy='max')
     return ner_scores
 
 def hgTransformerGetZeroShot(sequences,
