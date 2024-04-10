@@ -4,7 +4,7 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 
 import torch
 import huggingface_hub
-from transformers import AutoConfig, AutoModel, AutoTokenizer
+from transformers import AutoConfig, AutoModel, AutoTokenizer, AutoModelForTokenClassification
 try:
     from transformers.utils import logging
 except ImportError:
@@ -214,6 +214,14 @@ def get_model(model, tokenizer_only=False, config_only=False, hg_gated=False, hg
         if not config_only:
             tokenizer = BloomTokenizerFast.from_pretrained(model)
             transformer_model = BloomModel.from_pretrained(model, config=config)
+    elif "" in model:
+        if hg_gated:
+            set_hg_gated_access(access_token=hg_token)
+        config = AutoConfig.from_pretrained(model, output_hidden_states=True)
+        if not config_only:
+            tokenizer = AutoTokenizer.from_pretrained(model)
+            transformer_model = AutoModelForTokenClassification.from_pretrained(model, ignore_mismatched_sizes=True, config=config)
+            # transformer_model = AutoModel.from_pretrained(model, config=config)
     else:
         #print("I am in get_model function now!!!!")
         #print(f"!!!!hg_gated: {hg_gated} !!!")
