@@ -32,7 +32,7 @@ PIPELINE_RESULTS_BY_TASK = {
     "translation": ["translation_text"], 
     "summarization": ["summary_text"], 
     "token-classification": ["entity"], 
-    "ner": ["entity"], 
+    "ner": ["entity", "entity_group"], 
     "text-generation": ["generated_text", "generated_token_ids"], 
     "zero-shot-classification": ["scores"], 
 }
