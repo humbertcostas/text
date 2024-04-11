@@ -214,7 +214,7 @@ def get_model(model, tokenizer_only=False, config_only=False, hg_gated=False, hg
         if not config_only:
             tokenizer = BloomTokenizerFast.from_pretrained(model)
             transformer_model = BloomModel.from_pretrained(model, config=config)
-    elif task.startswith('Neurona/cpegen') in model:
+    elif model.startswith('Neurona/cpegen'):
         if hg_gated:
             set_hg_gated_access(access_token=hg_token)
         config = AutoConfig.from_pretrained(model, output_hidden_states=True)
